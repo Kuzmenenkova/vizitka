@@ -18,6 +18,10 @@
 
     <section class="hero-image">
       <div class="container">
+        
+        <input id="phone" type="tel">
+<span id="valid-msg" class="hide">✓ Valid</span>
+<span id="error-msg" class="hide"></span>
         <div class="ui-popup-wrapper"><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons phone-request" tabindex="-1" role="dialog" style="position: relative; display: block; height: auto; width: 555px;" aria-describedby="ui-id-6" aria-labelledby="ui-id-7"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-7" class="ui-dialog-title">Хотите получить полный доступ ко всем возможностям приложения на 3 дня? </span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span></button></div><div id="ui-id-6" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 0px; max-height: none; height: auto;"><div id="ui-dialog-phone-request">
 <form><label>Пожалуйста, заполните полностью свой профиль
 <input class="phone-input" type="tel" placeholder="Ваш телефон">
@@ -32,6 +36,43 @@
       </div>
     </footer>
 <script>
+  var input = document.querySelector("#phone"),
+  errorMsg = document.querySelector("#error-msg"),
+  validMsg = document.querySelector("#valid-msg");
+
+// here, the index maps to the error code returned from getValidationError - see readme
+var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+// initialise plugin
+var iti = window.intlTelInput(input, {
+  utilsScript: "../../build/js/utils.js?1638200991544"
+});
+
+var reset = function() {
+  input.classList.remove("error");
+  errorMsg.innerHTML = "";
+  errorMsg.classList.add("hide");
+  validMsg.classList.add("hide");
+};
+
+// on blur: validate
+input.addEventListener('blur', function() {
+  reset();
+  if (input.value.trim()) {
+    if (iti.isValidNumber()) {
+      validMsg.classList.remove("hide");
+    } else {
+      input.classList.add("error");
+      var errorCode = iti.getValidationError();
+      errorMsg.innerHTML = errorMap[errorCode];
+      errorMsg.classList.remove("hide");
+    }
+  }
+});
+
+// on keyup / change flag: reset
+input.addEventListener('change', reset);
+input.addEventListener('keyup', reset);
     </script>
   </body>
 </html>
