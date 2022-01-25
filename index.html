@@ -20,9 +20,11 @@
 
     <section class="hero-image">
       <div class="container">
-        
-        <input id="phone" type="tel" value="+447733312345">
-<!--
+        Поиск страны пользователя : используйте поиск IP-адреса, чтобы установить страну по умолчанию для страны пользователя.
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <input id="phone" type="tel">
+
+        <!--
 
         <div class="ui-popup-wrapper"><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons phone-request" tabindex="-1" role="dialog" style="position: relative; display: block; height: auto; width: 555px;" aria-describedby="ui-id-6" aria-labelledby="ui-id-7"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-7" class="ui-dialog-title">Хотите получить полный доступ ко всем возможностям приложения на 3 дня? </span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span></button></div><div id="ui-id-6" class="ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 0px; max-height: none; height: auto;"><div id="ui-dialog-phone-request">
 <form><label>Пожалуйста, заполните полностью свой профиль
@@ -44,9 +46,16 @@
     <script src="js/utils.js"></script>
 <script>
   var input = document.querySelector("#phone");
-      window.intlTelInput(input, {
-        utilsScript: "../../build/js/utils.js?1638200991544" // just for formatting/placeholders etc
+  window.intlTelInput(input, {
+    initialCountry: "auto",
+    geoIpLookup: function(callback) {
+      $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+        var countryCode = (resp && resp.country) ? resp.country : "us";
+        callback(countryCode);
       });
+    },
+    utilsScript: "../../build/js/utils.js?1638200991544" // just for formatting/placeholders etc
+  });
     </script>
   </body>
 </html>
