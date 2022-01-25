@@ -30,31 +30,6 @@
       </div>
     </footer>
 <script>
-  	function phoneRequest(){
-		Bc.Dialog.modal({
-			dialogClass: 'phone-request',
-			title: 'Хотите получить полный доступ ко всем возможностям приложения на 3 дня? ',
-			body: '<div id="ui-dialog-phone-request">\n' +
-				'<form>' +
-				'<label>Пожалуйста, заполните полностью свой профиль\n' +
-				'<input class="phone-input" type="tel" placeholder="Ваш телефон" required>\n' +
-				'</label>\n' +
-				'</form>\n' +
-				'</div>',
-			buttons: [
-				{
-					text: "Сохранить",
-					class: "btn--left",
-					click: function() {
-						$(this).dialog("close");
-					}
-				}
-			],
-			width: 555
-		});
-	}
-  phoneRequest();
-
     </script>
   </body>
 </html>
