@@ -8210,3 +8210,7 @@ input[type="submit"][readonly="readonly"]:hover {
 	display: block;
 	padding: 0 0 20px;
 }
+
+.docs-list {
+	text-align: left;
+}
